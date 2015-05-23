@@ -25,4 +25,6 @@ import android.os.Environment;
 
 public class Config{
 	public static final String TAG = "nbnl";
+	// もうちょっといいやり方はあとで考える
+	public static final String ConnectionDeviceAddress = "C2:C2:DA:5B:50:F3";
 }
