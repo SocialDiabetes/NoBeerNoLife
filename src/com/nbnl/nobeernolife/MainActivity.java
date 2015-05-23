@@ -20,6 +20,7 @@ import android.view.MenuItem;
 
 public class MainActivity extends Activity {
 	private SoundController mSoundController;
+	private BluetoothAdapter mBluetoothAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,25 +28,26 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		mSoundController = new SoundController(this);
 		mSoundController.addSound("4476a36f9a7baf193d9284962c6b07a5.mp3");
-		SearchBluetooth();
+		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+		mBluetoothAdapter.enable();
+		SearchBluetoothDevice();
 	}
 
-	private void SearchBluetooth(){
+	private void SearchBluetoothDevice(){
 		BluetoothBroadcastReceiver receiver = new BluetoothBroadcastReceiver();
-		BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
 		filter.addAction(BluetoothDevice.ACTION_FOUND);
 		filter.addAction(BluetoothDevice.ACTION_NAME_CHANGED);
 		filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
 		this.registerReceiver(receiver, filter);
-		if(bluetoothAdapter.isDiscovering()){
+		if(mBluetoothAdapter.isDiscovering()){
 			//検索中の場合は検出をキャンセルする
-			bluetoothAdapter.cancelDiscovery();
+			mBluetoothAdapter.cancelDiscovery();
 		}
 		//デバイスを検索する
 		//一定時間の間検出を行う
-		bluetoothAdapter.startDiscovery();
+		mBluetoothAdapter.startDiscovery();
 		Log.d(Config.TAG, "hogehoge");
 	}
 
