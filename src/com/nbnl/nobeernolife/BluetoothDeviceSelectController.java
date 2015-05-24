@@ -50,6 +50,7 @@ public class BluetoothDeviceSelectController{
 
 	public interface ConnectableDeviceCallback{
 		public void devices(ArrayList<BluetoothDevice> deviceList);
+		public void singleDevice(BluetoothDevice device);
 	}
 
 	private void SearchBluetoothDevice(){
@@ -67,12 +68,12 @@ public class BluetoothDeviceSelectController{
 			
 			@Override
 			public void onDeviceFound(BluetoothDevice device) {
-				
+				mCallback.singleDevice(device);
 			}
 			
 			@Override
 			public void onDeviceChanged(BluetoothDevice device) {
-				
+				mCallback.singleDevice(device);
 			}
 		});
 		IntentFilter filter = new IntentFilter();
