@@ -35,6 +35,7 @@ public class BluetoothDeviceSelectController{
     public BluetoothDeviceSelectController(Context context){
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		mBluetoothAdapter.enable();
+		mContext = context;
 	}
 
 	public void setConnectableDeviceCallback(ConnectableDeviceCallback callback){
@@ -44,11 +45,7 @@ public class BluetoothDeviceSelectController{
 	public void startDiscovery(){
 		Set<BluetoothDevice> devices = mBluetoothAdapter.getBondedDevices();
 		Log.d(Config.TAG, devices.toString());
-		if(devices.isEmpty()){
-			SearchBluetoothDevice();
-		}else{
-			mCallback.devices(new ArrayList<BluetoothDevice>(devices));
-		}
+		SearchBluetoothDevice();
 	}
 
 	public interface ConnectableDeviceCallback{
